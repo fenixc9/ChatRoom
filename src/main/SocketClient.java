@@ -1,3 +1,5 @@
+package main;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -110,6 +112,11 @@ public class SocketClient {
                 try {
                     socket.close();
                 } catch (IOException e) {
+                    try {
+                        dos.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
                 return false;
             default:
@@ -143,6 +150,11 @@ public class SocketClient {
                 lastReceivedMsg = is.readUTF();
             } catch (IOException e) {
                 isRunning = false;
+                try {
+                    dos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 System.out.println("disconnected");
             }
             return lastReceivedMsg;
